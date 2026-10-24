@@ -159,10 +159,7 @@ namespace RScreenFlash
                             if (recorder)
                                 VisualPreferences.BadgeSizePercent = (int)badgeScale.Value;
                             else
-                            {
-                                VisualPreferences.BorderFadeDurationMs = (int)fadeDuration.Value;
-                                VisualPreferences.SelectionMagnifierEnabled = magnifier.Checked;
-                            }
+                                VisualPreferences.SaveSelectionSettings((int)fadeDuration.Value, magnifier.Checked);
                         }
                         catch
                         {

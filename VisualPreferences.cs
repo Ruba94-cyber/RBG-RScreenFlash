@@ -66,13 +66,19 @@ namespace RScreenFlash
             return pairs;
         }
 
-        private static void WriteNumber(string key, int value, int minimum, int maximum)
+        public static void SaveSelectionSettings(int borderFadeDurationMs, bool selectionMagnifierEnabled)
         {
-            if (value < minimum || value > maximum)
-                throw new ArgumentOutOfRangeException("value");
+            if (borderFadeDurationMs < 120 || borderFadeDurationMs > 500)
+                throw new ArgumentOutOfRangeException("borderFadeDurationMs");
 
             var pairs = ReadAll();
-            pairs[key] = value.ToString(CultureInfo.InvariantCulture);
+            pairs["border-fade-ms"] = borderFadeDurationMs.ToString(CultureInfo.InvariantCulture);
+            pairs["selection-magnifier"] = selectionMagnifierEnabled ? "1" : "0";
+            WriteAll(pairs);
+        }
+
+        private static void WriteAll(Dictionary<string, string> pairs)
+        {
             string path = PreferencesPath;
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             string temp = path + "." + Guid.NewGuid().ToString("N") + ".tmp";
@@ -92,6 +98,16 @@ namespace RScreenFlash
                 if (File.Exists(temp))
                     File.Delete(temp);
             }
+        }
+
+        private static void WriteNumber(string key, int value, int minimum, int maximum)
+        {
+            if (value < minimum || value > maximum)
+                throw new ArgumentOutOfRangeException("value");
+
+            var pairs = ReadAll();
+            pairs[key] = value.ToString(CultureInfo.InvariantCulture);
+            WriteAll(pairs);
         }
     }
 }

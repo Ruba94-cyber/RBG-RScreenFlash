@@ -19,6 +19,31 @@ try {
     $conflict = $type.GetMethod('FindShortcutConflict', $flags)
     if ($null -eq $save -or $null -eq $read -or $null -eq $conflict) { throw 'Shortcut entry points missing.' }
 
+    $createInput = $type.GetMethod('CreateShortcutInput', $flags)
+    $keyDown = [Windows.Forms.Control].GetMethod('OnKeyDown', [Reflection.BindingFlags]::NonPublic -bor [Reflection.BindingFlags]::Instance)
+    if ($null -eq $createInput -or $null -eq $keyDown) { throw 'Shortcut capture input entry points missing.' }
+    $captureInput = $createInput.Invoke($null, @(0, 0, 200))
+    try {
+        $keys = [Windows.Forms.Keys]
+        $firstKey = [Windows.Forms.KeyEventArgs]::new($keys::Control -bor $keys::Alt -bor $keys::F8)
+        $keyDown.Invoke($captureInput, @($firstKey)) | Out-Null
+        if ($captureInput.Text -ne 'Ctrl+Alt+F8') { throw "Shortcut capture missed the standard chord: $($captureInput.Text)" }
+
+        $shiftedKey = [Windows.Forms.KeyEventArgs]::new($keys::Control -bor $keys::Alt -bor $keys::Shift -bor $keys::F9)
+        $keyDown.Invoke($captureInput, @($shiftedKey)) | Out-Null
+        if ($captureInput.Text -ne 'Ctrl+Alt+Shift+F9') { throw "Shortcut capture missed Shift: $($captureInput.Text)" }
+
+        $invalidKey = [Windows.Forms.KeyEventArgs]::new($keys::Control -bor $keys::Alt -bor $keys::D0)
+        $keyDown.Invoke($captureInput, @($invalidKey)) | Out-Null
+        if ($captureInput.Text -ne 'Ctrl+Alt+Shift+F9') { throw 'Shortcut capture accepted a non-letter/non-function key.' }
+
+        $deleteKey = [Windows.Forms.KeyEventArgs]::new($keys::Delete)
+        $keyDown.Invoke($captureInput, @($deleteKey)) | Out-Null
+        if ($captureInput.Text -ne '') { throw 'Delete did not clear the captured shortcut.' }
+    } finally {
+        $captureInput.Dispose()
+    }
+
     $modeA = 'Test screen mode'
     $modeB = 'Test window mode'
     $first = 'Ctrl+Alt+F8'
@@ -64,6 +89,39 @@ try {
         $zoomSetting = $visualType.GetProperty('SelectionMagnifierEnabled', $visualFlags)
         $zoomSetting.SetValue($null, $true, $null)
         if (-not [bool]$zoomSetting.GetValue($null, $null)) { throw 'Magnifier preference did not persist.' }
+
+        $atomicSave = $visualType.GetMethod('SaveSelectionSettings', $visualFlags)
+        if ($null -eq $atomicSave) { throw 'Atomic visual-preference save entry point missing.' }
+        $setting.SetValue($null, 240, $null)
+        $zoomSetting.SetValue($null, $false, $null)
+        $preferencesPath = Join-Path $root 'RBG\RScreenFlash\preferences.ini'
+        $preferencesBefore = [IO.File]::ReadAllText($preferencesPath)
+        $lock = [IO.File]::Open($preferencesPath, [IO.FileMode]::Open, [IO.FileAccess]::Read, [IO.FileShare]::Read)
+        try {
+            $writeFailed = $false
+            try {
+                $atomicSave.Invoke($null, @([int]360, [bool]$true)) | Out-Null
+            } catch {
+                $failure = $_.Exception
+                while ($null -ne $failure -and -not ($failure -is [IO.IOException])) {
+                    $failure = $failure.InnerException
+                }
+                if ($null -eq $failure) { throw }
+                $writeFailed = $true
+            }
+            if (-not $writeFailed) { throw 'Locked preference replacement unexpectedly succeeded.' }
+        } finally {
+            $lock.Dispose()
+        }
+        if ([IO.File]::ReadAllText($preferencesPath) -cne $preferencesBefore) {
+            throw 'A failed atomic visual-preference update changed the existing settings file.'
+        }
+        if ([int]$setting.GetValue($null, $null) -ne 240 -or [bool]$zoomSetting.GetValue($null, $null)) {
+            throw 'Visual preferences did not roll back after the isolated write failure.'
+        }
+        if (@(Get-ChildItem -LiteralPath (Split-Path $preferencesPath) -Filter 'preferences.ini.*.tmp').Count -ne 0) {
+            throw 'Atomic visual-preference failure left a temporary file behind.'
+        }
     }
     Write-Host 'Shortcut settings and visual preferences smoke tests passed.'
 }

@@ -26,9 +26,9 @@ if ($LASTEXITCODE -ne 0) { throw "Release x64 build failed (exit $LASTEXITCODE).
 
 $exe = Join-Path $root 'bin\x64\Release\RBG - RScreenFlash.exe'
 if (-not (Test-Path -LiteralPath $exe -PathType Leaf)) { throw "Release executable is missing: $exe" }
-$version = '1.0.1'
+$version = '1.2.0'
 $info = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($exe)
-if ($info.FileVersion -ne '1.0.1.0' -or $info.ProductVersion -ne $version) {
+if ($info.FileVersion -ne '1.2.0.0' -or $info.ProductVersion -ne $version) {
     throw "Unexpected executable version metadata: file=$($info.FileVersion), product=$($info.ProductVersion)"
 }
 if ($info.CompanyName -ne 'Paolo Rubagotti' -or

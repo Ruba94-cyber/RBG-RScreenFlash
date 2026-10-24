@@ -32,7 +32,7 @@ jobs:
           powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\tests\\Test-Shortcuts.ps1 -Executable '.\\bin\x64\Release\\RBG - RScreenFlash.exe' -Namespace 'RScreenFlash' -ApplicationName 'RBG RScreenFlash'
       - uses: actions/upload-artifact@v4
         with:
-          name: RBG-RScreenFlash-1.0.1-windows-x64
+          name: RBG-RScreenFlash-1.2.0-windows-x64
           path: release/*
           if-no-files-found: error
           retention-days: 14

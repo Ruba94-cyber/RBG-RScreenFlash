@@ -49,7 +49,7 @@ Enable **Show optional pixel magnifier when selecting an area** in Ctrl+Shift se
 
 ### Release download
 
-Download `RBG-RScreenFlash-1.0.1-windows-x64.zip` from GitHub Releases, extract the archive, then run `RBG - RScreenFlash.exe`.
+Download `RBG-RScreenFlash-1.2.0-windows-x64.zip` from GitHub Releases, extract the archive, then run `RBG - RScreenFlash.exe`.
 
 ## File Organization
 

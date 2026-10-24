@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased — configurable shortcuts and smoother feedback
+## 1.2.0 — configurable shortcuts and visual selection settings
 
 - Add global shortcuts for screen capture and area selection via per-user Windows Explorer Start Menu links, with no resident process.
 - Detect collisions with other RBG utility shortcuts, verify and restore link changes after errors.

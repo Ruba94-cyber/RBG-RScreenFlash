@@ -109,6 +109,8 @@ checked after exit. The first run may include operating-system and .NET
 cold-start effects. Compare baseline and optimized builds under the same
 conditions before drawing conclusions.
 
+The FlaUI settings smoke project, `tests/RScreenFlash.SettingsUiAutomation.csproj`, checks opening Settings, saving and reopening shortcut assignments, the default fade duration and supported boundaries, magnifier toggling, and preference persistence. `tests/Test-Shortcuts.ps1` covers shortcut normalization, conflict handling, clearing assignments, link paths, and key-capture behavior. Explorer hotkey activation and persistence across Windows restarts still require manual acceptance.
+
 ## Why Choose RScreenFlash?
 
 - **Speed** – Capture instantly without navigating menus.

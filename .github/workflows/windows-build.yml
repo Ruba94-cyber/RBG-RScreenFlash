@@ -26,6 +26,10 @@ jobs:
         run: |
           & .\tools\Package-Release.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Test per-user keyboard shortcuts (isolated)
+        shell: pwsh
+        run: |
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\\tests\\Test-Shortcuts.ps1 -Executable '.\\bin\x64\Release\\RBG - RScreenFlash.exe' -Namespace 'RScreenFlash' -ApplicationName 'RBG RScreenFlash'
       - uses: actions/upload-artifact@v4
         with:
           name: RBG-RScreenFlash-1.0.1-windows-x64

@@ -1,5 +1,7 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace RScreenFlash
@@ -11,6 +13,7 @@ namespace RScreenFlash
         private Rectangle selectionScreen;
         private Rectangle virtualScreen;
         private bool isSelecting = false;
+        private Bitmap magnifierBackdrop;
 
         public Rectangle SelectedRegion => GetScreenSelection();
 
@@ -27,6 +30,26 @@ namespace RScreenFlash
             this.WindowState = FormWindowState.Normal;
 
             virtualScreen = GetTrueVirtualScreen();
+            if (VisualPreferences.SelectionMagnifierEnabled)
+            {
+                try
+                {
+                    magnifierBackdrop = new Bitmap(virtualScreen.Width, virtualScreen.Height,
+                        PixelFormat.Format32bppArgb);
+                    using (Graphics graphics = Graphics.FromImage(magnifierBackdrop))
+                        graphics.CopyFromScreen(virtualScreen.Location, Point.Empty, virtualScreen.Size);
+                }
+                catch (Exception)
+                {
+                    if (magnifierBackdrop != null)
+                    {
+                        magnifierBackdrop.Dispose();
+                        magnifierBackdrop = null;
+                    }
+                    // The magnifier is optional and must never prevent selection.
+                }
+            }
+
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(virtualScreen.X, virtualScreen.Y);
             this.Size = new Size(virtualScreen.Width, virtualScreen.Height);
@@ -115,6 +138,59 @@ namespace RScreenFlash
                     e.Graphics.DrawString(dimensions, font, textBrush, textPos);
                 }
             }
+            DrawMagnifier(e.Graphics);
+        }
+
+        // Pixel loupe uses a backdrop captured before the selection overlay becomes
+        // visible, avoiding recursive screen grabs of the overlay itself.
+        private void DrawMagnifier(Graphics graphics)
+        {
+            if (magnifierBackdrop == null || !ClientRectangle.Contains(PointToClient(Cursor.Position)))
+                return;
+
+            Point cursor = PointToClient(Cursor.Position);
+            const int sample = 19;
+            const int size = 114;
+            int sx = Math.Max(0, Math.Min(cursor.X - sample / 2, magnifierBackdrop.Width - sample));
+            int sy = Math.Max(0, Math.Min(cursor.Y - sample / 2, magnifierBackdrop.Height - sample));
+            int x = Math.Max(4, Math.Min(cursor.X + 20, ClientSize.Width - size - 4));
+            int y = Math.Max(4, Math.Min(cursor.Y + 20, ClientSize.Height - size - 4));
+
+            InterpolationMode oldInterpolation = graphics.InterpolationMode;
+            PixelOffsetMode oldPixelOffset = graphics.PixelOffsetMode;
+            try
+            {
+                graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+                graphics.PixelOffsetMode = PixelOffsetMode.Half;
+                graphics.DrawImage(magnifierBackdrop,
+                    new Rectangle(x, y, size, size),
+                    new Rectangle(sx, sy, sample, sample),
+                    GraphicsUnit.Pixel);
+                using (var border = new Pen(Color.Cyan, 2))
+                    graphics.DrawRectangle(border, x, y, size, size);
+                using (var crosshair = new Pen(Color.FromArgb(190, 255, 255, 255), 1))
+                {
+                    int centerX = x + size / 2;
+                    int centerY = y + size / 2;
+                    graphics.DrawLine(crosshair, centerX, y, centerX, y + size);
+                    graphics.DrawLine(crosshair, x, centerY, x + size, centerY);
+                }
+            }
+            finally
+            {
+                graphics.InterpolationMode = oldInterpolation;
+                graphics.PixelOffsetMode = oldPixelOffset;
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && magnifierBackdrop != null)
+            {
+                magnifierBackdrop.Dispose();
+                magnifierBackdrop = null;
+            }
+            base.Dispose(disposing);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)

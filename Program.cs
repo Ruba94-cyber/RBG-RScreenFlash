@@ -453,7 +453,7 @@ namespace RScreenFlash
                 // A time-based easing curve fades the cyan border in and out smoothly.
                 using (var timer = new System.Windows.Forms.Timer { Interval = 16 })
                 {
-                    const double durationMs = 180.0;
+                    double durationMs = VisualPreferences.BorderFadeDurationMs;
                     var animation = new Stopwatch();
                     timer.Tick += (sender, args) =>
                     {

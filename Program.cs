@@ -94,18 +94,42 @@ namespace RScreenFlash
         private const uint MONITOR_DEFAULTTONEAREST = 2;
         private const int MDT_EFFECTIVE_DPI = 0;
 
+        [DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(int virtualKey);
+
+        private const int VK_CONTROL = 0x11;
+        private const int VK_SHIFT = 0x10;
+
+        private static bool HasArgument(string[] args, string name)
+        {
+            return Array.Exists(args, arg => string.Equals(arg, name, StringComparison.OrdinalIgnoreCase));
+        }
+
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             s_applicationStopwatch = Stopwatch.StartNew();
             s_benchmarkTimingsPath = Environment.GetEnvironmentVariable("RSCREENFLASH_BENCHMARK_TIMINGS");
-            s_shiftMode = (Control.ModifierKeys & Keys.Shift) == Keys.Shift;
+            bool forceArea = HasArgument(args, "--capture-area");
+            bool forceScreen = HasArgument(args, "--capture-screen");
+            bool controlHeld = (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0;
+            bool shiftHeld = (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0;
+            bool settingsRequested = HasArgument(args, "--settings") ||
+                (!forceArea && !forceScreen && controlHeld && shiftHeld);
+            s_shiftMode = forceArea || (!forceScreen && shiftHeld);
 
             try
             {
                 InitializeDpiAwareness();
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
+                if (settingsRequested)
+                {
+                    ShortcutSettings.Show("RBG RScreenFlash", "Full-screen screenshot", "Area selection",
+                        "--capture-screen", "--capture-area", "Ctrl+Alt+S", "Ctrl+Alt+A");
+                    return;
+                }
 
                 Rectangle bounds;
                 if (s_shiftMode)
@@ -425,29 +449,28 @@ namespace RScreenFlash
 
                 flash.Region = borderRegion;
 
-                // Keep feedback brief and use the existing UI message loop.
-                using (var timer = new System.Windows.Forms.Timer { Interval = 12 })
+                // Feedback appears only after the PNG and clipboard work is complete.
+                // A time-based easing curve fades the cyan border in and out smoothly.
+                using (var timer = new System.Windows.Forms.Timer { Interval = 16 })
                 {
-                    int frame = 0;
-                    timer.Tick += (s, e) =>
+                    double durationMs = VisualPreferences.BorderFadeDurationMs;
+                    var animation = new Stopwatch();
+                    timer.Tick += (sender, args) =>
                     {
-                        frame++;
-                        if (frame <= 2)
-                            flash.Opacity = frame * 0.4;
-                        else if (frame == 3)
-                            flash.Opacity = 0.8;
-                        else if (frame <= 5)
-                            flash.Opacity = (6 - frame) * 0.2;
-                        else
+                        double t = Math.Min(1.0, animation.Elapsed.TotalMilliseconds / durationMs);
+                        flash.Opacity = 0.75 * Math.Sin(Math.PI * t);
+                        if (t >= 1.0)
                         {
                             timer.Stop();
                             flash.Close();
                         }
                     };
-                    flash.Shown += (s, e) => timer.Start();
-                    flash.FormClosed += (s, e) => timer.Stop();
-
-                    // This runs only after capture, save, and clipboard retries.
+                    flash.Shown += (sender, args) =>
+                    {
+                        animation.Start();
+                        timer.Start();
+                    };
+                    flash.FormClosed += (sender, args) => timer.Stop();
                     flash.ShowDialog();
                 }
             }

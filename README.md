@@ -2,7 +2,7 @@
 
 RBG - RScreenFlash is a fast, lightweight screenshot utility for Windows designed to deliver professional captures with zero fuss.
 
-Windows release packages are unsigned because no Authenticode certificate is available. The executable metadata identifies Paolo Rubagotti and `paolo.ruba.1913@gmail.com`; Windows may show an unknown publisher notice.
+Windows release executables are Authenticode-signed with Paolo Rubagotti's self-signed code-signing certificate. Each release includes the public `.cer` and its SHA-256 fingerprint; the private `.pfx` is never distributed. Because this certificate is self-signed rather than issued by a public CA, Windows can still show an unknown-publisher or SmartScreen warning until the user chooses to trust it.
 
 ## Key Features
 
@@ -49,7 +49,9 @@ Enable **Show optional pixel magnifier when selecting an area** in Ctrl+Shift se
 
 ### Release download
 
-Download `RBG-RScreenFlash-1.2.0-windows-x64.zip` from GitHub Releases, extract the archive, then run `RBG - RScreenFlash.exe`.
+Download `RBG-RScreenFlash-1.2.1-windows-x64.zip` from GitHub Releases, extract the archive, then run `RBG - RScreenFlash.exe`.
+
+The archive contains `Paolo-Rubagotti-CodeSigning.cer` and `CERTIFICATE-FINGERPRINT-SHA256.txt`. On a PC you administer, import the `.cer` into **Trusted Root Certification Authorities** and **Trusted Publishers** before running the app to have Windows recognize this specific signer. Verify the fingerprint against the one published with the release before trusting it. SmartScreen reputation warnings can remain even after importing a self-signed certificate.
 
 ## File Organization
 

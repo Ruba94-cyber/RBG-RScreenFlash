@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 — settings visibility
+
+- Make Ctrl+Shift settings readable and resizable across display scaling and smaller work areas, and bring the dialog to the foreground when opened.
+
 ## 1.2.0 — configurable shortcuts and visual selection settings
 
 - Add global shortcuts for screen capture and area selection via per-user Windows Explorer Start Menu links, with no resident process.

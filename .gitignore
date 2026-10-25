@@ -28,3 +28,8 @@ Thumbs.db
 # Generated at build time
 ScreenshotFlash.Package/Images/*.png
 Icon_screenshotflash.ico
+
+# Local validation and release packages
+.audit/
+.benchmark-output/
+release/

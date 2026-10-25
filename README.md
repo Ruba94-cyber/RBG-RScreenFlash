@@ -40,6 +40,7 @@ Suggested combinations are `Ctrl+Alt+S` and `Ctrl+Alt+A`; click **Save settings*
 - Click a shortcut field and press **Ctrl+Alt+letter** or **Ctrl+Alt+F1–F12** (optionally with Shift). Delete clears an assignment.
 - The app saves per-user shortcuts to the Start Menu's `RBG Utilities` folder. Windows Explorer handles global shortcut keys when running; the app does not remain resident. Reserved/conflicting combinations may not activate.
 - If the executable is moved, launch it with Ctrl+Shift again and save shortcuts to update the link targets.
+- Settings uses text-sized fields and a scrollable body; Save and Cancel remain visible when the window is resized.
 - Direct launching remains unchanged: ordinary launch captures the monitor, Shift+launch selects an area, Ctrl+Shift+launch opens settings.
 - The cyan **border** fades in and out smoothly after capture, without delaying screenshot saving or clipboard copying. Its duration is adjustable from 120 to 500 ms (180 ms default).
 
@@ -49,7 +50,7 @@ Enable **Show optional pixel magnifier when selecting an area** in Ctrl+Shift se
 
 ### Release download
 
-Download `RBG-RScreenFlash-1.2.1-windows-x64.zip` from GitHub Releases, extract the archive, then run `RBG - RScreenFlash.exe`.
+Download `RBG-RScreenFlash-1.2.2-windows-x64.zip` from GitHub Releases, extract the archive, then run `RBG - RScreenFlash.exe`.
 
 The archive contains `Paolo-Rubagotti-CodeSigning.cer` and `CERTIFICATE-FINGERPRINT-SHA256.txt`. On a PC you administer, import the `.cer` into **Trusted Root Certification Authorities** and **Trusted Publishers** before running the app to have Windows recognize this specific signer. Verify the fingerprint against the one published with the release before trusting it. SmartScreen reputation warnings can remain even after importing a self-signed certificate.
 
@@ -111,7 +112,7 @@ checked after exit. The first run may include operating-system and .NET
 cold-start effects. Compare baseline and optimized builds under the same
 conditions before drawing conclusions.
 
-The FlaUI settings smoke project, `tests/RScreenFlash.SettingsUiAutomation.csproj`, checks opening Settings, saving and reopening shortcut assignments, the default fade duration and supported boundaries, magnifier toggling, and preference persistence. `tests/Test-Shortcuts.ps1` covers shortcut normalization, conflict handling, clearing assignments, link paths, and key-capture behavior. Explorer hotkey activation and persistence across Windows restarts still require manual acceptance.
+The FlaUI settings smoke project, `tests/RScreenFlash.SettingsUiAutomation.csproj`, checks opening Settings, readable inputs and buttons at normal and compact sizes, saving and reopening shortcut assignments, the default fade duration and supported boundaries, magnifier toggling, and preference persistence. `tests/Test-Shortcuts.ps1` covers shortcut normalization, conflict handling, clearing assignments, link paths, and key-capture behavior. Explorer hotkey activation and persistence across Windows restarts still require manual acceptance.
 
 ## Why Choose RScreenFlash?
 

@@ -160,7 +160,7 @@ namespace RScreenFlash
                     AutoSize = true, ForeColor = Color.DimGray,
                     Text = recorder
                         ? "Press a recording shortcut again to stop. Pause / resume keeps the video open.\r\nIf you move this app, save the shortcuts again from its new location."
-                        : "Save to enable the shortcuts. If you move this app, save them again from its new location.",
+                        : "Save to enable shortcuts and their Windows startup helper. If you move this app, save settings again.",
                     Margin = new Padding(0, px(8), 0, 0)
                 });
                 viewport.Controls.Add(fields);
@@ -234,6 +234,7 @@ namespace RScreenFlash
                                 VisualPreferences.BadgeSizePercent = (int)badgeScale.Value;
                             else
                                 VisualPreferences.SaveSelectionSettings((int)fadeDuration.Value, magnifier.Checked);
+                            ShortcutHotkeyHost.RefreshAfterSettingsSave();
                         }
                         catch
                         {
@@ -246,6 +247,8 @@ namespace RScreenFlash
                                 try { SaveShortcut(applicationName, thirdMode, thirdArgument, oldThird ?? ""); }
                                 catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex); }
                             }
+                            try { ShortcutHotkeyHost.RefreshAfterSettingsSave(); }
+                            catch (Exception ex) { System.Diagnostics.Debug.WriteLine(ex); }
                             throw;
                         }
 
@@ -390,7 +393,7 @@ namespace RScreenFlash
             }
         }
 
-        private static string ReadShortcut(string applicationName, string mode)
+        internal static string ReadShortcut(string applicationName, string mode)
         {
             string path = GetShortcutPath(applicationName, mode);
             if (!File.Exists(path))

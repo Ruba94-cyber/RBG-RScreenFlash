@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.3 — reliable shortcuts between captures
+
+- Keep configured keyboard shortcuts available through a small windowless helper that starts with Windows and launches the current executable.
+- Restart the helper after saving shortcut changes; clearing both shortcuts stops it and removes its Startup link.
+- Document how to refresh shortcuts that still target an older extracted version.
+
 ## 1.2.2 — readable settings and shortcut registration
 
 - Use text-sized controls, a scrollable settings body, and a fixed action row for readable settings at high DPI.

@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: AssemblyMetadata("Author", "Paolo Rubagotti")]
 [assembly: AssemblyMetadata("ContactEmail", "paolo.ruba.1913@gmail.com")]
-[assembly: AssemblyInformationalVersion("1.2.1")]
+[assembly: AssemblyInformationalVersion("1.2.2")]
 
 // Se il progetto viene esposto a COM, il GUID seguente verrà utilizzato come ID della libreria dei tipi
 [assembly: Guid("934582e2-6681-477c-885f-e1402ec44a5e")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 //      Numero di build
 //      Revisione
 //
-[assembly: AssemblyVersion("1.2.1.0")]
-[assembly: AssemblyFileVersion("1.2.1.0")]
+[assembly: AssemblyVersion("1.2.2.0")]
+[assembly: AssemblyFileVersion("1.2.2.0")]

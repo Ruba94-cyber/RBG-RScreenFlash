@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.2 — readable settings and shortcut registration
+
+- Use text-sized controls, a scrollable settings body, and a fixed action row for readable settings at high DPI.
+- Refresh Windows shortcut registration when settings are saved, including when reusing the same keyboard combination.
+
 ## 1.2.1 — settings visibility
 
 - Make Ctrl+Shift settings readable and resizable across display scaling and smaller work areas, and bring the dialog to the foreground when opened.

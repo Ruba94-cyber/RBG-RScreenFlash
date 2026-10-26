@@ -108,6 +108,12 @@ namespace RScreenFlash
         [STAThread]
         static void Main(string[] args)
         {
+            if (ShortcutHotkeyHost.IsRequested(args))
+            {
+                ShortcutHotkeyHost.Run();
+                return;
+            }
+
             s_applicationStopwatch = Stopwatch.StartNew();
             s_benchmarkTimingsPath = Environment.GetEnvironmentVariable("RSCREENFLASH_BENCHMARK_TIMINGS");
             bool forceArea = HasArgument(args, "--capture-area");
@@ -130,6 +136,8 @@ namespace RScreenFlash
                         "--capture-screen", "--capture-area", "Ctrl+Alt+S", "Ctrl+Alt+A");
                     return;
                 }
+
+                ShortcutHotkeyHost.EnsureRunning();
 
                 Rectangle bounds;
                 if (s_shiftMode)

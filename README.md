@@ -1,6 +1,6 @@
 # RBG - RScreenFlash
 
-**Fast, simple screenshots for Windows.** Capture a monitor or select an area, with automatic PNG saving and clipboard copying.
+**Fast screenshots across multiple monitors.** Capture any individual display or select an area spanning two or more screens, automatically saved as one PNG and copied to your clipboard.
 
 ## Download
 
@@ -10,19 +10,24 @@ Requires Windows 10/11 and .NET Framework 4.8. No installation wizard is needed.
 
 ## Features
 
-- **One-click capture:** takes a screenshot of the monitor under your mouse pointer.
-- **Area selection:** click and drag to capture exactly what you need, including across multiple monitors.
+- **Multi-monitor capture:** take a screenshot of any connected display or select a region crossing multiple screens **in a single image**.
+- **One-click capture:** automatically captures the monitor under your mouse pointer.
+- **Flexible area selection:** click and drag to capture exactly what you need, across different monitor layouts and resolutions.
 - **Automatic saving and copying:** saves a PNG locally and copies the image to your clipboard for immediate pasting.
 - **Cyan border feedback:** a brief outline confirms the capture without appearing in the screenshot.
 - **Optional magnifier:** zoom in on pixels while selecting an area.
 - **Custom shortcuts:** capture without keeping the main application open.
 
+## Multi-monitor capture
+
+With two or more monitors, **move your cursor onto the screen you want to capture** and launch normally to screenshot that display. To capture content **across several monitors at once**, hold **Shift** while launching and drag a selection across the screen boundaries. The entire selected region is saved as **one PNG**, not separate screenshots. Different monitor sizes and Windows display scaling are supported.
+
 ## How to use
 
 | Action | What to do |
 | --- | --- |
-| **Capture a monitor** | Open `RBG - RScreenFlash.exe` normally. |
-| **Capture a selected area** | Hold **Shift** while opening the executable, then click and drag over the area. |
+| **Capture any monitor** | Move the mouse onto that monitor, then open `RBG - RScreenFlash.exe`. |
+| **Capture an area across screens** | Hold **Shift** while opening the executable, then drag across one or more monitors. |
 | **Cancel area selection** | Press **Esc**. |
 | **Open Settings** | Hold **Ctrl + Shift** while opening the executable. |
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon_cyan.ico" width="112" alt="RBG - RScreenFlash official application icon" />
+  <img src="assets/rscreenflash-icon-256.png" width="112" alt="RBG - RScreenFlash official application icon" />
 </p>
 
 <h1 align="center">RBG - RScreenFlash</h1>

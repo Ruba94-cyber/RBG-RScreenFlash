@@ -1,51 +1,139 @@
-# RBG - RScreenFlash
+<p align="center">
+  <img src="icon_cyan.ico" width="112" alt="RBG - RScreenFlash official application icon" />
+</p>
 
-**Fast screenshots across multiple monitors.** Capture any individual display or select an area spanning two or more screens, automatically saved as one PNG and copied to your clipboard.
+<h1 align="center">RBG - RScreenFlash</h1>
+
+<p align="center">
+  <strong>Fast screenshots for Windows — including selections across multiple monitors.</strong><br />
+  Capture, save as PNG and copy to your clipboard in one straightforward workflow.
+</p>
+
+<p align="center">
+  <a href="https://github.com/Ruba94-cyber/RBG-RScreenFlash/releases/latest"><strong>Download latest release</strong></a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#keyboard-shortcuts">Shortcuts</a> ·
+  <a href="CHANGELOG.md">What's new</a> ·
+  <a href="#support-development">Donate</a>
+</p>
+
+<p align="center">
+  <img alt="Windows 10/11" src="https://img.shields.io/badge/Windows-10%20%2F%2011-263238?logo=windows&logoColor=white" />
+  <img alt=".NET Framework 4.8" src="https://img.shields.io/badge/.NET_Framework-4.8-512BD4" />
+  <img alt="Output PNG" src="https://img.shields.io/badge/Output-PNG%20%2B%20clipboard-24786E" />
+  <img alt="MIT license" src="https://img.shields.io/badge/License-MIT-4F6573" />
+  <img alt="Latest release" src="https://img.shields.io/github/v/release/Ruba94-cyber/RBG-RScreenFlash?label=release" />
+</p>
+
+## Why RScreenFlash?
+
+**RBG - RScreenFlash** is designed to take screenshots with as little friction as possible — even if your workspace spans several monitors with different resolutions or scaling.
+
+Use it for **documentation, issue reports, presentations and sharing what is on your screen**, without manually merging screenshots from different displays.
+
+| Capability | What you get |
+| --- | --- |
+| **Instant monitor capture** | Capture the monitor currently under the mouse pointer. |
+| **Cross-monitor selection** | Drag over multiple displays and save the selected area as **one image**. |
+| **Automatic PNG save** | Screenshots are saved locally without opening an editor. |
+| **Clipboard copy** | Paste the captured image directly into another application. |
+| **Precise selection** | Optional pixel magnifier helps with careful area selection. |
+| **Visual feedback** | A short cyan outline confirms capture, without becoming part of the screenshot. |
+| **Custom shortcuts** | Capture monitors or select regions without keeping the main UI open. |
 
 ## Download
 
-[Download the latest release](https://github.com/Ruba94-cyber/RBG-RScreenFlash/releases/latest), extract the ZIP, and run `RBG - RScreenFlash.exe`.
+**[Download RBG - RScreenFlash for Windows](https://github.com/Ruba94-cyber/RBG-RScreenFlash/releases/latest)**
 
-Requires Windows 10/11 and .NET Framework 4.8. No installation wizard is needed.
+1. Download the **Windows x64 ZIP** from the latest release.
+2. Extract it to a folder you want to keep.
+3. Launch **`RBG - RScreenFlash.exe`**.
 
-## Features
+**Requirements:** Windows 10/11 and **.NET Framework 4.8**. No installation wizard is required.
 
-- **Multi-monitor capture:** take a screenshot of any connected display or select a region crossing multiple screens **in a single image**.
-- **One-click capture:** automatically captures the monitor under your mouse pointer.
-- **Flexible area selection:** click and drag to capture exactly what you need, across different monitor layouts and resolutions.
-- **Automatic saving and copying:** saves a PNG locally and copies the image to your clipboard for immediate pasting.
-- **Cyan border feedback:** a brief outline confirms the capture without appearing in the screenshot.
-- **Optional magnifier:** zoom in on pixels while selecting an area.
-- **Custom shortcuts:** capture without keeping the main application open.
+For authenticity and integrity, use the checksums and signing certificate information provided alongside the release. Verify the published fingerprint before trusting any signing certificate.
 
-## Multi-monitor capture
+## Quick start
 
-With two or more monitors, **move your cursor onto the screen you want to capture** and launch normally to screenshot that display. To capture content **across several monitors at once**, hold **Shift** while launching and drag a selection across the screen boundaries. The entire selected region is saved as **one PNG**, not separate screenshots. Different monitor sizes and Windows display scaling are supported.
+### Capture one monitor
 
-## How to use
+1. Put your mouse cursor on the monitor you want.
+2. Launch **`RBG - RScreenFlash.exe`** normally.
+3. RScreenFlash saves a screenshot of that display as a PNG and copies it to the clipboard.
 
-| Action | What to do |
+### Capture a region across several monitors
+
+1. Hold **Shift** while launching the application.
+2. Click and drag to select any rectangular region — including one that crosses monitor boundaries.
+3. Release the mouse to capture the selected area as **one PNG**, not separate screenshots.
+4. Press **Esc** if you want to cancel the selection.
+
+RScreenFlash supports multi-monitor layouts with different display sizes and Windows scaling settings.
+
+**Where is the screenshot?** Images are saved automatically in:
+
+`%USERPROFILE%\Pictures\Screenshots\screen_[timestamp]_[id].png`
+
+The captured image is also copied to the clipboard, ready to paste.
+
+### Quick-reference controls
+
+| Action | How |
 | --- | --- |
-| **Capture any monitor** | Move the mouse onto that monitor, then open `RBG - RScreenFlash.exe`. |
-| **Capture an area across screens** | Hold **Shift** while opening the executable, then drag across one or more monitors. |
-| **Cancel area selection** | Press **Esc**. |
-| **Open Settings** | Hold **Ctrl + Shift** while opening the executable. |
+| Capture a display | Launch normally, with the cursor on that monitor |
+| Select an area, even across monitors | Hold **Shift** while launching, then drag |
+| Cancel an area selection | Press **Esc** |
+| Open settings | Hold **Ctrl + Shift** while launching |
+| Adjust the capture feedback | Open Settings to change cyan-border duration |
+| Enable pixel magnifier | Open Settings; magnifier is off by default |
 
-Screenshots are saved automatically to `%USERPROFILE%\Pictures\Screenshots\` as `screen_[timestamp]_[id].png` and copied to the clipboard.
+## Keyboard shortcuts
 
-### Optional keyboard shortcuts
+Open Settings with **Ctrl + Shift** while launching, choose your shortcuts, then click **Save settings**.
 
-Open Settings, assign your preferred keys, and select **Save settings** to activate them. Suggested combinations:
-
-| Shortcut | Action |
+| Suggested shortcut | Action |
 | --- | --- |
-| `Ctrl + Alt + S` | Capture a monitor |
-| `Ctrl + Alt + A` | Select an area |
+| `Ctrl + Alt + S` | Capture the monitor under the cursor |
+| `Ctrl + Alt + A` | Start area selection |
 
-Shortcuts **are not enabled until you save them**. A small background helper keeps them available while the main app is closed and starts with Windows. Clear both assignments and save to disable it. If you move the executable, save your shortcuts again.
+> [!NOTE]
+> Shortcuts are customizable and are **not enabled until you save them**. A small windowless helper starts with Windows to keep them available between captures. Clear both assignments and save to turn it off. After moving the executable or extracting a newer release elsewhere, save your shortcuts again to refresh their target location.
 
-Settings also lets you enable the **pixel magnifier** (off by default) and adjust how long the cyan border appears.
+## Tips & troubleshooting
 
-## Support the project
+- To capture across two screens, start the **Shift** selection and drag across their shared boundary.
+- For accurate selections, enable the **pixel magnifier** in Settings.
+- The **cyan border** is only visual confirmation; it is not baked into the PNG.
+- The duration of the border animation is adjustable.
+- If a saved shortcut opens an old version, re-save the shortcuts from the new executable.
+- If pasting fails in a destination app, use the PNG already saved in the screenshots folder.
 
-Enjoying RScreenFlash? [Support its development with a PayPal donation](https://www.paypal.com/donate?business=paolo.ruba.1913%40gmail.com&no_recurring=0&item_name=Support+RScreenFlash&currency_code=EUR).
+## Build from source
+
+RScreenFlash is a **.NET Framework 4.8** Windows desktop project. A compatible Visual Studio / MSBuild installation and targeting pack are required.
+
+From the repository root, the Windows build-check script is:
+
+```powershell
+.\tools\build-check.ps1
+```
+
+Shortcut and settings tests are available in `tests/`. Some UI-related checks require a Windows desktop session. See the [changelog](CHANGELOG.md) for recent fixes and features.
+
+## Feedback & contributions
+
+Suggestions and bug reports are welcome via **[GitHub Issues](https://github.com/Ruba94-cyber/RBG-RScreenFlash/issues)**. Include your Windows version, app release and steps to reproduce; avoid uploading private screenshots.
+
+## Support development
+
+RScreenFlash is independently developed. If it makes your everyday work easier, you can support continued development, maintenance and testing with an optional donation.
+
+**[❤️ Support RScreenFlash with a PayPal donation](https://www.paypal.com/donate?business=paolo.ruba.1913%40gmail.com&no_recurring=0&item_name=Support+RScreenFlash&currency_code=EUR)**
+
+## License
+
+Released under the **[MIT License](LICENSE)**. Copyright © Paolo Rubagotti. See the license file for the full terms.
+
+---
+
+<p align="center"><sub>Made by Paolo Rubagotti · <a href="https://github.com/Ruba94-cyber/RBG-RScreenFlash/releases/latest">Download</a> · <a href="https://github.com/Ruba94-cyber/RBG-RScreenFlash/issues">Feedback</a> · <a href="#support-development">Support the project</a></sub></p>
